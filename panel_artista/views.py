@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-
+from .decorators import admin_required
 from obras.models import Obra, ObraImagen, Categoria
 from .forms import ObraForm, ObraImagenForm, CategoriaForm
 
@@ -19,6 +19,7 @@ def es_admin(user):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def panel_home(request):
 
     obras = Obra.objects.all().order_by('-destacada', 'orden', '-fecha_creacion')
@@ -34,6 +35,7 @@ def panel_home(request):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def crear_obra(request):
     if request.method == "POST":
         form = ObraForm(request.POST, request.FILES)
@@ -54,6 +56,7 @@ def crear_obra(request):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def editar_obra(request, obra_id):
     obra = get_object_or_404(Obra, id=obra_id)
 
@@ -82,6 +85,7 @@ def editar_obra(request, obra_id):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def agregar_imagen_extra(request, obra_id):
     obra = get_object_or_404(Obra, id=obra_id)
 
@@ -107,6 +111,7 @@ def agregar_imagen_extra(request, obra_id):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def preview_obra(request, obra_id):
     obra = get_object_or_404(Obra, id=obra_id)
 
@@ -121,6 +126,7 @@ def preview_obra(request, obra_id):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def toggle_destacada(request, obra_id):
     obra = get_object_or_404(Obra, id=obra_id)
     obra.destacada = not obra.destacada
@@ -134,6 +140,7 @@ def toggle_destacada(request, obra_id):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def mover_obra(request, obra_id, direccion):
 
     obra = get_object_or_404(Obra, id=obra_id)
@@ -153,6 +160,7 @@ def mover_obra(request, obra_id, direccion):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def categorias(request):
     lista = Categoria.objects.all().order_by("nombre")
 
@@ -172,6 +180,7 @@ def categorias(request):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def editar_categoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
 
@@ -191,6 +200,7 @@ def editar_categoria(request, categoria_id):
 
 @login_required
 @user_passes_test(es_admin)
+@admin_required
 def eliminar_categoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
     categoria.delete()

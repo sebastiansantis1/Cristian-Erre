@@ -12,7 +12,6 @@ class UsuarioRegistroForm(UserCreationForm):
             'email',
             'first_name',
             'last_name',
-            'rol',
             'password1',
             'password2',
         ]
@@ -22,6 +21,16 @@ class UsuarioRegistroForm(UserCreationForm):
         if Usuario.objects.filter(email=email).exists():
             raise forms.ValidationError("Ya existe un usuario registrado con este correo.")
         return email
+
+    def save(self, commit=True):
+        # Guardar usuario asegurando que siempre sea CLIENTE
+        usuario = super().save(commit=False)
+        usuario.rol = Usuario.Roles.CLIENTE
+
+        if commit:
+            usuario.save()
+
+        return usuario
 
 
 class UsuarioLoginForm(AuthenticationForm):
