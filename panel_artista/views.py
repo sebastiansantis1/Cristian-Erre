@@ -10,8 +10,9 @@ from .forms import ObraForm, ObraImagenForm, CategoriaForm
 # -------------------------------------------------------
 
 def es_admin(user):
-    return user.is_authenticated and user.rol == "admin"
-
+    if not user.is_authenticated:
+        return False
+    return user.is_superuser or user.rol == 'ADMIN' or user.groups.filter(name='Administradores').exists()
 
 # -------------------------------------------------------
 # DASHBOARD PRINCIPAL DEL PANEL

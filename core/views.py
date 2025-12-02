@@ -1,5 +1,7 @@
-# core/views.py
 from django.shortcuts import render
+from cms.models import HomePageContent
+
 
 def home(request):
-    return render(request, 'core/home.html')
+    contenido_home = HomePageContent.get_solo()
+    return render(request, "core/home.html", {"contenido_home": contenido_home})

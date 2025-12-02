@@ -12,7 +12,7 @@ urlpatterns = [
     path('carrito/', include('carrito.urls')),
     path('pedidos/', include('pedidos.urls')),
     path("panel/", include("panel_artista.urls")),
-    
+    path("cms/", include("cms.urls")),
     
 ]
 

@@ -118,8 +118,8 @@
 
         .brand-main {
             font-size: 1.8rem;
+            letter-transform: uppercase;
             letter-spacing: 3px;
-            text-transform: uppercase;
             font-weight: 700;
         }
 
@@ -500,7 +500,6 @@
             color: var(--accent-gold-strong);
             transition: 0.3s ease;
         }
-
     </style>
 
     {% block extra_head %}{% endblock %}
@@ -523,14 +522,17 @@
             <a href="/">Inicio</a>
             <a href="/obras/">Catálogo</a>
             <a href="/carrito/">Carrito</a>
-            <a href="/usuarios/login/">Login</a>
-            <a href="/usuarios/registro/">Registro</a>
-            <a href="/usuarios/perfil/">Perfil</a>
+
+            {% if user.is_authenticated %}
+                <a href="/usuarios/perfil/">Perfil</a>
+                <a href="/usuarios/logout/">Cerrar sesión</a>
+            {% else %}
+                <a href="/usuarios/login/">Login</a>
+                <a href="/usuarios/registro/">Registro</a>
+            {% endif %}
 
             {% if user.is_authenticated and user.is_superuser or user.is_authenticated and user.rol == 'ADMIN' %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'panel_home' %}">Panel Artista</a>
-                </li>
+                <a class="nav-link" href="{% url 'panel_home' %}">Panel Artista</a>
             {% endif %}
         </nav>
     </div>
@@ -538,13 +540,20 @@
 
 <section class="hero">
     <div class="hero-left">
-        <h2 class="hero-title">Galería digital de alto nivel.</h2>
+        <h2 class="hero-title">
+            {{ contenido_home.titulo_principal|default:"Galería digital de alto nivel." }}
+        </h2>
         <p class="hero-subtitle">
-            Obras cuidadosamente diseñadas, con enfoque en detalle, emoción y técnica.  
-            Explora el catálogo, arma tu colección y gestiona todo desde una experiencia limpia y elegante.
+            {{ contenido_home.subtitulo|default:"Obras cuidadosamente diseñadas, con enfoque en detalle, emoción y técnica. Explora el catálogo, arma tu colección y gestiona todo desde una experiencia limpia y elegante." }}
         </p>
         <div class="hero-cta">
-            <a href="/obras/" class="btn-primary">Explorar catálogo</a>
+            {% if contenido_home.mostrar_boton and contenido_home.texto_boton %}
+                <a href="{{ contenido_home.url_boton|default:'/obras/' }}" class="btn-primary">
+                    {{ contenido_home.texto_boton }}
+                </a>
+            {% else %}
+                <a href="/obras/" class="btn-primary">Explorar catálogo</a>
+            {% endif %}
             <a href="/carrito/" class="btn-ghost">Ver mi carrito</a>
         </div>
     </div>
@@ -565,5 +574,4 @@
 
 </body>
 </html>
-
 

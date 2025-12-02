@@ -1,0 +1,101 @@
+{% extends "core/base.html" %}
+
+{% block title %}CMS - Contenido de inicio{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">CMS · Contenido de la página de inicio</h2>
+    <p class="page-subtitle">
+        Edita los textos principales del hero, el botón y las redes de contacto.
+    </p>
+
+    {% if messages %}
+        <div class="form-errors-global">
+            {% for message in messages %}
+                {{ message }}
+                {% if not forloop.last %}<br>{% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_titulo_principal">Título principal</label>
+            {{ form.titulo_principal }}
+            {{ form.titulo_principal.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_subtitulo">Subtítulo / descripción</label>
+            {{ form.subtitulo }}
+            {{ form.subtitulo.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_imagen_fondo">Imagen de fondo del hero (opcional)</label>
+            {{ form.imagen_fondo }}
+            {{ form.imagen_fondo.errors }}
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label for="id_texto_boton">Texto del botón principal</label>
+            {{ form.texto_boton }}
+            {{ form.texto_boton.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_url_boton">URL del botón principal</label>
+            {{ form.url_boton }}
+            {{ form.url_boton.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_mostrar_boton">
+                {{ form.mostrar_boton }} Mostrar botón principal
+            </label>
+            {{ form.mostrar_boton.errors }}
+        </div>
+
+        <hr>
+
+        <h3 class="page-title" style="font-size:1.1rem;">Redes y contacto</h3>
+
+        <div class="form-group">
+            <label for="id_instagram_url">Instagram</label>
+            {{ form.instagram_url }}
+            {{ form.instagram_url.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_tiktok_url">TikTok</label>
+            {{ form.tiktok_url }}
+            {{ form.tiktok_url.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_whatsapp_url">WhatsApp (link completo)</label>
+            {{ form.whatsapp_url }}
+            {{ form.whatsapp_url.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_email_contacto">Email de contacto</label>
+            {{ form.email_contacto }}
+            {{ form.email_contacto.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_activo">
+                {{ form.activo }} Contenido activo
+            </label>
+            {{ form.activo.errors }}
+        </div>
+
+        <button type="submit" class="btn">Guardar cambios</button>
+    </form>
+</div>
+{% endblock %}
