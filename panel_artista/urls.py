@@ -9,4 +9,5 @@ urlpatterns = [
     path('obra/<int:obra_id>/mover/<str:direccion>/', views.mover_obra, name='mover_obra'),
     path('obra/<int:obra_id>/preview/', views.preview_obra, name='preview_obra'),
     path('obra/<int:obra_id>/agregar-imagen/', views.agregar_imagen_extra, name='agregar_imagen_extra'),
+    
 ]
