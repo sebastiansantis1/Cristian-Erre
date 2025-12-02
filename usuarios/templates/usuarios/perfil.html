@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil - Cristian Erre{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Mi perfil</h2>
+
+    <p><strong>Usuario:</strong> {{ usuario.username }}</p>
+    <p><strong>Nombre:</strong> {{ usuario.first_name }} {{ usuario.last_name }}</p>
+    <p><strong>Correo:</strong> {{ usuario.email }}</p>
+    <p><strong>Rol:</strong> {{ usuario.get_rol_display }}</p>
+
+    <a class="btn btn-secondary" href="/usuarios/logout/">Cerrar sesión</a>
+</div>
+{% endblock %}

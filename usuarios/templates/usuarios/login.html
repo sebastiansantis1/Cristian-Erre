@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Cristian Erre{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Iniciar sesión</h2>
+
+    {% if form.errors %}
+        <p>Revisa tus datos, hay errores en el formulario.</p>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">Entrar</button>
+    </form>
+
+    <p>¿No tienes cuenta? <a href="/usuarios/registro/">Regístrate aquí</a></p>
+</div>
+{% endblock %}
