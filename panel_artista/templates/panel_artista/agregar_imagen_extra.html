@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Agregar imagen{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Agregar imagen adicional</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button class="btn">Agregar imagen</button>
+    </form>
+</div>
+{% endblock %}

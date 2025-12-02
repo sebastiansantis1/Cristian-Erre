@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Mi carrito · Cristian Erre{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Mi carrito</h2>
+    <p class="page-subtitle">Revisa las obras seleccionadas antes de confirmar tu compra.</p>
+
+    {% if items %}
+        <table class="table">
+            <tr>
+                <th>Obra</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+
+            {% for item in items %}
+            <tr>
+                <td>{{ item.obra.nombre }}</td>
+                <td>{{ item.obra.precio }}</td>
+                <td>
+                    <form action="{% url 'actualizar_item' item.id %}" method="POST" style="display:flex; gap:6px; align-items:center;">
+                        {% csrf_token %}
+                        <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" style="width:60px;">
+                        <button type="submit" class="btn">✔</button>
+                    </form>
+                </td>
+                <td>{{ item.subtotal }}</td>
+                <td>
+                    <a href="{% url 'eliminar_del_carrito' item.id %}" class="btn-secondary btn">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3 style="margin-top: 18px;">Total: {{ total }}</h3>
+
+        <div style="margin-top: 18px;">
+            <a href="/pedidos/checkout/" class="btn">Ir al pago</a>
+            <a href="/obras/" class="btn-secondary btn">Seguir explorando</a>
+        </div>
+    {% else %}
+        <p>Tu carrito está vacío.</p>
+        <a href="/obras/" class="btn" style="margin-top:10px;">Ver catálogo</a>
+    {% endif %}
+</div>
+{% endblock %}

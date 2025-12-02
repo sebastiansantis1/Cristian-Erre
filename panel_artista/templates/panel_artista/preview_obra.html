@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Preview de {{ obra.nombre }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Preview de obra</h2>
+    <p class="page-subtitle">Así se verá la obra cuando sea publicada.</p>
+
+    {% if obra.imagen_principal %}
+        <img src="{{ obra.imagen_principal.url }}" 
+             style="max-width:100%; border-radius:12px; margin-bottom:20px;">
+    {% endif %}
+
+    <h3>{{ obra.nombre }}</h3>
+    <p>{{ obra.descripcion_emocional }}</p>
+    <p><strong>Técnica:</strong> {{ obra.terminos_tecnicos }}</p>
+    <p><strong>Tiempo:</strong> {{ obra.tiempo_produccion }}</p>
+    <p><strong>Precio:</strong> ${{ obra.precio }}</p>
+
+    <h3 style="margin-top:30px;">Imágenes adicionales</h3>
+
+    <div style="display:flex; flex-wrap:wrap; gap:15px;">
+        {% for img in obra.imagenes_extra.all %}
+            <img src="{{ img.imagen.url }}" 
+                 style="width:140px; border-radius:8px; border:1px solid #444;">
+        {% empty %}
+            <p style="color:#777;">No hay imágenes adicionales.</p>
+        {% endfor %}
+    </div>
+
+    <a href="/panel/" class="btn-secondary btn" style="margin-top:20px;">Volver</a>
+</div>
+{% endblock %}
+

@@ -1,22 +1,35 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
-{% block title %}Login - Cristian Erre{% endblock %}
+{% block title %}Iniciar sesión · Cristian Erre{% endblock %}
 
 {% block content %}
 <div class="card">
-    <h2>Iniciar sesión</h2>
+    <h2 class="page-title">Iniciar sesión</h2>
+    <p class="page-subtitle">Accede a tu cuenta para gestionar tu perfil y pedidos.</p>
 
-    {% if form.errors %}
-        <p>Revisa tus datos, hay errores en el formulario.</p>
+    {% if form.non_field_errors %}
+        <div class="form-errors-global">
+            {{ form.non_field_errors }}
+        </div>
     {% endif %}
 
     <form method="post" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
 
         <button type="submit" class="btn">Entrar</button>
     </form>
 
-    <p>¿No tienes cuenta? <a href="/usuarios/registro/">Regístrate aquí</a></p>
+    <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">
+        ¿No tienes cuenta?
+        <a href="/usuarios/registro/">Crea una cuenta aquí</a>.
+    </p>
 </div>
 {% endblock %}

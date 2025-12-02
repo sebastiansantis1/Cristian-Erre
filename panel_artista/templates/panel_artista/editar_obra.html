@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Editar obra{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Editar obra: {{ obra.nombre }}</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group" style="margin-bottom:15px;">
+            <label style="font-weight:600;">{{ field.label }}</label>
+            {{ field }}
+            <div style="color:#e37474;">{{ field.errors }}</div>
+        </div>
+        {% endfor %}
+
+        <button class="btn" type="submit">Guardar cambios</button>
+        <a href="/panel/" class="btn-secondary btn">Volver</a>
+    </form>
+</div>
+
+<div class="card">
+    <h3>Imágenes adicionales</h3>
+
+    <a href="{% url 'agregar_imagen_extra' obra.id %}" class="btn">➕ Agregar imagen</a>
+
+    <div style="margin-top:20px; display:flex; flex-wrap:wrap; gap:15px;">
+        {% for img in imagenes_extra %}
+            <div>
+                <img src="{{ img.imagen.url }}" 
+                     style="width:120px; height:auto; border-radius:8px; border:1px solid #444;">
+                {% if img.descripcion %}
+                    <p style="color:#ccc;">{{ img.descripcion }}</p>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p style="color:#777;">No hay imágenes adicionales.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

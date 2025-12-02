@@ -1,0 +1,64 @@
+{% extends "core/base.html" %}
+
+{% block title %}Catálogo{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Catálogo de Obras</h2>
+    <p class="page-subtitle">Explora las obras disponibles del artista.</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:20px; margin-top:20px;">
+        {% for obra in obras %}
+        <div style="
+            background:#111;
+            border:1px solid #222;
+            border-radius:12px;
+            padding:15px;
+            width:280px;
+            transition:0.3s;
+        ">
+
+            <!-- Imagen principal -->
+            <a href="{% url 'detalle_obra' obra.id %}">
+                {% if obra.imagen_principal %}
+                    <img src="{{ obra.imagen_principal.url }}" 
+                         style="width:100%; border-radius:10px; border:1px solid #333;">
+                {% else %}
+                    <div style="padding:40px 0; text-align:center; color:#777;">
+                        Sin imagen
+                    </div>
+                {% endif %}
+            </a>
+
+            <!-- Título -->
+            <h3 style="margin-top:12px; font-size:1.2rem;">
+                {{ obra.nombre }}
+                {% if obra.destacada %}
+                    <span style="color:#f5d78e;">★</span>
+                {% endif %}
+            </h3>
+
+            <!-- Categoría -->
+            <p style="color:#aaa; font-size:0.9rem;">
+                {% if obra.categoria %}
+                    {{ obra.categoria.nombre }}
+                {% endif %}
+            </p>
+
+            <!-- Precio -->
+            <p style="color:#f5d78e; font-weight:600; font-size:1.1rem;">
+                ${{ obra.precio }}
+            </p>
+
+            <a href="{% url 'detalle_obra' obra.id %}" class="btn" style="margin-top:10px;">
+                Ver obra
+            </a>
+        </div>
+        {% empty %}
+        <p style="color:#777; padding:20px;">No hay obras publicadas.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+

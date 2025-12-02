@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Pedido confirmado · Cristian Erre{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Pedido confirmado 🎉</h2>
+    <p class="page-subtitle">Tu orden ha sido registrada correctamente.</p>
+
+    <p><strong>Número de pedido:</strong> #{{ pedido.id }}</p>
+    <p><strong>Fecha:</strong> {{ pedido.fecha }}</p>
+    <p><strong>Total:</strong> {{ pedido.total }}</p>
+
+    <h3 style="margin-top:16px; margin-bottom:8px;">Artículos:</h3>
+    <ul style="margin:0; padding-left:18px;">
+        {% for item in pedido.items.all %}
+            <li>{{ item.cantidad }} × {{ item.obra.nombre }} — {{ item.subtotal }}</li>
+        {% endfor %}
+    </ul>
+
+    <div style="margin-top:18px;">
+        <a class="btn" href="/pedidos/mis-pedidos/">Ver mis pedidos</a>
+        <a class="btn-secondary btn" href="/obras/">Seguir explorando</a>
+    </div>
+</div>
+{% endblock %}
+

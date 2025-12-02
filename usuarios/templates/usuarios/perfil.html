@@ -1,16 +1,35 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
-{% block title %}Perfil - Cristian Erre{% endblock %}
+{% block title %}Mi perfil · Cristian Erre{% endblock %}
 
 {% block content %}
 <div class="card">
-    <h2>Mi perfil</h2>
+    <h2 class="page-title">Mi perfil</h2>
+    <p class="page-subtitle">Información asociada a tu cuenta en la galería.</p>
 
-    <p><strong>Usuario:</strong> {{ usuario.username }}</p>
-    <p><strong>Nombre:</strong> {{ usuario.first_name }} {{ usuario.last_name }}</p>
+    <div style="display:flex; align-items:center; gap:18px; margin-top:10px; margin-bottom:18px;">
+        <div style="
+            width:64px; height:64px; border-radius:50%;
+            background:radial-gradient(circle at 30% 20%, #f5d78e, #8b6b3b 60%, #1c1205 100%);
+            display:flex; align-items:center; justify-content:center;
+            font-weight:700; font-size:1.2rem; color:#000;">
+            {{ usuario.username|slice:":2"|upper }}
+        </div>
+        <div>
+            <div style="font-size:1rem; font-weight:600;">{{ usuario.first_name }} {{ usuario.last_name }}</div>
+            <div style="font-size:0.9rem; color:var(--text-muted);">@{{ usuario.username }}</div>
+        </div>
+    </div>
+
     <p><strong>Correo:</strong> {{ usuario.email }}</p>
-    <p><strong>Rol:</strong> {{ usuario.get_rol_display }}</p>
+    <p>
+        <strong>Rol:</strong>
+        <span class="pill">{{ usuario.get_rol_display }}</span>
+    </p>
 
-    <a class="btn btn-secondary" href="/usuarios/logout/">Cerrar sesión</a>
+    <div style="margin-top:18px;">
+        <a class="btn-secondary btn" href="/pedidos/mis-pedidos/">Ver mis pedidos</a>
+        <a class="btn" href="{% url 'logout' %}">Cerrar sesión</a>
+    </div>
 </div>
 {% endblock %}

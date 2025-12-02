@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Crear obra{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Crear nueva obra</h2>
+    <p class="page-subtitle">Completa los campos para agregar una nueva obra al catálogo.</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label style="font-weight:600;">{{ field.label }}</label>
+            {{ field }}
+            <div style="color:#e37474;">{{ field.errors }}</div>
+        </div>
+        {% endfor %}
+
+        <button class="btn" type="submit">Crear obra</button>
+        <a href="/panel/" class="btn-secondary btn">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+

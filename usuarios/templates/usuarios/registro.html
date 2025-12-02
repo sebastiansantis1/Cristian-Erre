@@ -1,22 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
-{% block title %}Registro - Cristian Erre{% endblock %}
+{% block title %}Registro · Cristian Erre{% endblock %}
 
 {% block content %}
 <div class="card">
-    <h2>Registro de usuario</h2>
+    <h2 class="page-title">Crear cuenta</h2>
+    <p class="page-subtitle">
+        Regístrate para guardar tus pedidos, favoritos y gestionar tu experiencia completa en la galería.
+    </p>
 
-    {% if form.errors %}
-        <p>Hay errores en el formulario. Corrígelos y vuelve a intentar.</p>
+    {% if form.non_field_errors %}
+        <div class="form-errors-global">
+            {{ form.non_field_errors }}
+        </div>
     {% endif %}
 
     <form method="post" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
 
         <button type="submit" class="btn">Crear cuenta</button>
     </form>
 
-    <p>¿Ya tienes cuenta? <a href="/usuarios/login/">Inicia sesión aquí</a></p>
+    <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">
+        ¿Ya tienes cuenta?
+        <a href="/usuarios/login/">Inicia sesión aquí</a>.
+    </p>
 </div>
 {% endblock %}

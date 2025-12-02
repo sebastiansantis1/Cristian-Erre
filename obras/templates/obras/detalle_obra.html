@@ -1,0 +1,43 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ obra.nombre }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">{{ obra.nombre }}</h2>
+
+    <!-- Imagen principal -->
+    {% if obra.imagen_principal %}
+        <img src="{{ obra.imagen_principal.url }}" 
+             style="max-width:100%; border-radius:12px; border:1px solid #333; margin-bottom:20px;">
+    {% endif %}
+
+    <!-- Carrusel de imágenes adicionales -->
+    {% if imagenes_extra %}
+    <div style="display:flex; gap:15px; overflow-x:auto; margin-bottom:20px;">
+        {% for img in imagenes_extra %}
+            <img src="{{ img.imagen.url }}"
+                 style="width:160px; height:auto; border-radius:8px; border:1px solid #444;">
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Información emocional y técnica -->
+    <p style="margin-top:20px;">{{ obra.descripcion_emocional }}</p>
+    <p style="color:#aaa;"><strong>Técnica:</strong> {{ obra.terminos_tecnicos }}</p>
+
+    {% if obra.tiempo_produccion %}
+    <p style="color:#aaa;"><strong>Tiempo de producción:</strong> {{ obra.tiempo_produccion }}</p>
+    {% endif %}
+
+    <!-- Precio -->
+    <h3 style="color:#f5d78e; margin-top:20px;">${{ obra.precio }}</h3>
+
+    <!-- Botón de carrito -->
+    <a href="/carrito/agregar/{{ obra.id }}/" class="btn" style="margin-top:12px;">
+        Agregar al carrito
+    </a>
+</div>
+{% endblock %}
+
+

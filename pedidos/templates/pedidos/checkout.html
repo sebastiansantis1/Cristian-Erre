@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Checkout · Cristian Erre{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Confirmar compra</h2>
+    <p class="page-subtitle">Revisa tu selección antes de confirmar el pedido.</p>
+
+    <table class="table">
+        <tr>
+            <th>Obra</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.obra.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.obra.precio }}</td>
+            <td>{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3 style="margin-top: 18px;">Total: {{ total }}</h3>
+
+    <form method="POST" action="{% url 'confirmar_pedido' %}" style="margin-top: 16px;">
+        {% csrf_token %}
+        <button type="submit" class="btn">Confirmar compra</button>
+        <a href="/carrito/" class="btn-secondary btn">Volver al carrito</a>
+    </form>
+</div>
+{% endblock %}
+

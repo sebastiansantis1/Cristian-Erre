@@ -1,0 +1,120 @@
+{% extends "core/base.html" %}
+
+{% block title %}Panel del Artista{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Panel del Artista</h2>
+    <p class="page-subtitle">Gestiona tus obras, imágenes, estado, orden y visibilidad.</p>
+
+    <a href="{% url 'crear_obra' %}" class="btn" style="margin-bottom:20px;">➕ Crear nueva obra</a>
+
+    <table style="width:100%; border-collapse:collapse; margin-top:20px;">
+        <thead>
+            <tr style="border-bottom:1px solid #333;">
+                <th style="padding:10px;">Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Visible</th>
+                <th>Destacada</th>
+                <th>Orden</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for obra in obras %}
+            <tr style="border-bottom:1px solid #222;">
+                <!-- Imagen -->
+                <td style="padding:10px;">
+                    {% if obra.imagen_principal %}
+                        <img src="{{ obra.imagen_principal.url }}" 
+                             style="width:80px; height:auto; border-radius:8px; border:1px solid #444;">
+                    {% else %}
+                        <span style="color:#777;">Sin imagen</span>
+                    {% endif %}
+                </td>
+
+                <!-- Nombre -->
+                <td>{{ obra.nombre }}</td>
+
+                <!-- Precio -->
+                <td>${{ obra.precio }}</td>
+
+                <!-- Categoría -->
+                <td>
+                    {% if obra.categoria %}
+                        {{ obra.categoria.nombre }}
+                    {% else %}
+                        <span style="color:#777;">Sin categoría</span>
+                    {% endif %}
+                </td>
+
+                <!-- Estado (publicada / borrador) -->
+                <td>
+                    {% if obra.estado == "publicada" %}
+                        <span style="color:#9be78b; font-weight:600;">Publicada</span>
+                    {% else %}
+                        <span style="color:#e7c06c; font-weight:600;">Borrador</span>
+                    {% endif %}
+                </td>
+
+                <!-- Visible / Oculta -->
+                <td>
+                    {% if obra.en_stock %}
+                        <span style="color:#9be78b;">Visible</span>
+                    {% else %}
+                        <span style="color:#e37474;">Oculta</span>
+                    {% endif %}
+                </td>
+
+                <!-- Destacada -->
+                <td>
+                    {% if obra.destacada %}
+                        <span style="color:#f5d78e; font-weight:700;">★</span>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+
+                <!-- Orden -->
+                <td>
+                    <a href="{% url 'mover_obra' obra.id 'up' %}" class="btn-secondary btn" style="padding:4px 8px;">↑</a>
+                    <a href="{% url 'mover_obra' obra.id 'down' %}" class="btn-secondary btn" style="padding:4px 8px;">↓</a>
+                </td>
+
+                <!-- Acciones -->
+                <td style="padding:8px 4px;">
+                    <!-- Editar -->
+                    <a href="{% url 'editar_obra' obra.id %}" class="btn-secondary btn" style="display:block; margin-bottom:6px;">
+                        Editar
+                    </a>
+
+                    <!-- Destacar / Quitar destacado -->
+                    <a href="{% url 'toggle_destacada' obra.id %}" class="btn-secondary btn" style="display:block; margin-bottom:6px;">
+                        {% if obra.destacada %}
+                            Quitar destacado
+                        {% else %}
+                            Destacar
+                        {% endif %}
+                    </a>
+
+                    <!-- Preview -->
+                    <a href="{% url 'preview_obra' obra.id %}" class="btn-secondary btn" style="display:block; margin-bottom:6px;">
+                        Preview
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="9" style="text-align:center; padding:40px; color:#777;">
+                    No hay obras registradas todavía.
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

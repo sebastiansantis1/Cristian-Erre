@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Mis pedidos · Cristian Erre{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="page-title">Mis pedidos</h2>
+    <p class="page-subtitle">Historial de pedidos asociados a tu cuenta.</p>
+
+    {% if pedidos %}
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+            </tr>
+            {% for pedido in pedidos %}
+            <tr>
+                <td>#{{ pedido.id }}</td>
+                <td>{{ pedido.fecha }}</td>
+                <td>{{ pedido.total }}</td>
+                <td>
+                    {% if pedido.estado == "PENDIENTE" %}
+                        <span class="badge-status badge-pendiente">Pendiente</span>
+                    {% elif pedido.estado == "PAGADO" %}
+                        <span class="badge-status badge-pagado">Pagado</span>
+                    {% elif pedido.estado == "ENVIADO" %}
+                        <span class="badge-status badge-enviado">Enviado</span>
+                    {% elif pedido.estado == "COMPLETADO" %}
+                        <span class="badge-status badge-completado">Completado</span>
+                    {% else %}
+                        {{ pedido.estado }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No tienes pedidos aún.</p>
+        <a href="/obras/" class="btn" style="margin-top:10px;">Explorar obras</a>
+    {% endif %}
+</div>
+{% endblock %}

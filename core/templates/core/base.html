@@ -1,0 +1,603 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Cristian Erre{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Estilos globales -->
+    <style>
+        /* -------------------------
+           TIPOGRAFÍA GLOBAL
+        --------------------------*/
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-main: #050608;
+            --bg-card: #111318;
+            --bg-card-soft: #171922;
+            --border-soft: #252737;
+            --accent-gold: #d1a85a;
+            --accent-gold-soft: rgba(209, 168, 90, 0.5);
+            --accent-gold-strong: #f5d78e;
+            --text-main: #f5f5f5;
+            --text-muted: #9a9a9a;
+            --danger: #ff6b6b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            background: radial-gradient(circle at top, #151720 0, #050608 50%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--accent-gold-strong);
+        }
+
+        /* -------------------------
+           ANIMACIONES GENERALES
+        --------------------------*/
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            0%   { box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+            50%  { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+        }
+
+        @keyframes float {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-gold-soft), transparent);
+            margin: 30px 0;
+        }
+
+        /* -------------------------
+           HEADER
+        --------------------------*/
+        header {
+            padding: 22px 20px 10px;
+            animation: fadeIn 0.7s ease-in-out;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-svg {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f5d78e, #8a6b32 60%, #1c1205 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);
+        }
+
+        .logo-svg span {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: #000;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-main {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .brand-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 300;
+            transition: 0.3s ease;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 0.85rem;
+        }
+
+        nav a:hover {
+            color: var(--accent-gold-strong);
+            border-color: var(--accent-gold-soft);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav {
+                justify-content: flex-start;
+            }
+        }
+
+        /* -------------------------
+           HERO
+        --------------------------*/
+        .hero {
+            margin: 15px 20px 10px;
+            padding: 24px 22px;
+            border-radius: 18px;
+            background: radial-gradient(circle at top left, rgba(209,168,90,0.28), transparent 55%),
+                        radial-gradient(circle at bottom right, rgba(90,136,209,0.18), transparent 60%),
+                        linear-gradient(to bottom right, #111318, #050608);
+            border: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            gap: 22px;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 10% 0, rgba(255,255,255,0.08), transparent 55%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .hero-left {
+            position: relative;
+            z-index: 1;
+            max-width: 60%;
+        }
+
+        .hero-title {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 9px 20px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #f5d78e, #d1a85a);
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            animation: glow 1.5s infinite ease-in-out;
+        }
+
+        .btn-ghost {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(0,0,0,0.4);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent-gold-soft);
+            color: var(--accent-gold-strong);
+        }
+
+        .hero-right {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hero-art-orb {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 20%, #fff7d9, transparent 50%),
+                radial-gradient(circle at 80% 80%, #f5d78e, transparent 55%),
+                radial-gradient(circle at 10% 80%, #8b6b3b, transparent 60%),
+                radial-gradient(circle at 50% 50%, #000, #010101 65%);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.9),
+                0 0 35px rgba(209,168,90,0.65);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .hero-left {
+                max-width: 100%;
+            }
+            .hero-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .hero-art-orb {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        /* -------------------------
+           CONTENIDO PRINCIPAL
+        --------------------------*/
+        main {
+            padding: 0 20px 40px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .page-content {
+            margin-top: 24px;
+        }
+
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .page-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        /* -------------------------
+           TARJETAS
+        --------------------------*/
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            padding: 24px;
+            border-radius: 14px;
+            margin-bottom: 24px;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-gold-soft);
+            transform: translateY(-2px);
+        }
+
+        /* -------------------------
+           BOTONES REUTILIZABLES
+        --------------------------*/
+        .btn {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: #181a22;
+            border: 1px solid var(--accent-gold-soft);
+            color: var(--accent-gold-strong);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: var(--accent-gold-strong);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.6);
+        }
+
+        .btn-secondary {
+            border-color: rgba(255,255,255,0.25);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.12);
+            color: var(--accent-gold-strong);
+        }
+
+        /* -------------------------
+           FORMULARIOS
+        --------------------------*/
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: inline-block;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .input, input[type="text"], input[type="email"], input[type="password"], input[type="number"], select, textarea {
+            width: 100%;
+            background: #10121a;
+            border: 1px solid #2c3040;
+            border-radius: 999px;
+            padding: 10px 14px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        textarea {
+            border-radius: 10px;
+            min-height: 100px;
+        }
+
+        .input:focus, input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-gold-soft);
+            box-shadow: 0 0 0 1px rgba(209,168,90,0.2);
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 4px 0 0;
+            color: var(--danger);
+            font-size: 0.8rem;
+        }
+
+        .form-errors-global {
+            background: rgba(255,107,107,0.08);
+            border: 1px solid rgba(255,107,107,0.4);
+            color: var(--danger);
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+        /* -------------------------
+           GRIDS & TABLAS
+        --------------------------*/
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #252737;
+            text-align: left;
+        }
+
+        .table th {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* -------------------------
+           BADGES / TAGS
+        --------------------------*/
+        .pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+        }
+
+        .badge-pendiente { background: rgba(255,215,0,0.08); color: var(--accent-gold-strong); }
+        .badge-pagado    { background: rgba(0,200,150,0.12); color: #35e0b5; }
+        .badge-enviado   { background: rgba(0,130,255,0.12); color: #5fb0ff; }
+        .badge-completado{ background: rgba(90,255,90,0.12); color: #8cff8c; }
+
+        /* -------------------------
+           FOOTER
+        --------------------------*/
+        footer {
+            text-align: center;
+            padding: 30px 20px 40px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer p:hover {
+            color: var(--accent-gold-strong);
+            transition: 0.3s ease;
+        }
+
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<header>
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <div class="logo-svg">
+                <span>CE</span>
+            </div>
+            <div class="brand-text">
+                <span class="brand-main">CRISTIAN ERRE</span>
+                <span class="brand-sub">Arte digital & ilustración</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/obras/">Catálogo</a>
+            <a href="/carrito/">Carrito</a>
+            <a href="/usuarios/login/">Login</a>
+            <a href="/usuarios/registro/">Registro</a>
+            <a href="/usuarios/perfil/">Perfil</a>
+
+            {% if request.user.is_authenticated and request.user.rol == "admin" %}
+                <a href="/panel/" class="btn-panel-artist">
+                    <!-- Ícono dorado en SVG estilo artístico -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="#f5d78e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="margin-right:6px;">
+                        <path d="M12 6C13.1 6 14 5.1 14 4C14 2.9 13.1 2 12 2C10.9 2 10 2.9 10 4C10 5.1 10.9 6 12 6Z"/>
+                        <path d="M19 21V19C19 16.8 17.2 15 15 15H9C6.8 15 5 16.8 5 19V21"/>
+                        <path d="M4 11C4 7.7 6.7 5 10 5H14C17.3 5 20 7.7 20 11"/>
+                    </svg>
+
+                    Panel del Artista
+                </a>
+
+                <style>
+                    .btn-panel-artist {
+                        display: inline-flex;
+                        align-items: center;
+                        padding: 8px 14px;
+                        border-radius: 8px;
+                        border: 1px solid #f5d78e;
+                        background: rgba(245, 215, 142, 0.06);
+                        color: #f5d78e;
+                        font-weight: 600;
+                        letter-spacing: 0.5px;
+                        text-decoration: none;
+                        transition: 0.25s ease;
+                        margin-left: 12px;
+                    }
+
+                    .btn-panel-artist:hover {
+                        background: rgba(245, 215, 142, 0.15);
+                        transform: translateY(-2px);
+                        box-shadow: 
+                            0 0 8px rgba(245, 215, 142, 0.5),
+                            0 0 16px rgba(245, 215, 142, 0.3);
+                    }
+                </style>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-left">
+        <h2 class="hero-title">Galería digital de alto nivel.</h2>
+        <p class="hero-subtitle">
+            Obras cuidadosamente diseñadas, con enfoque en detalle, emoción y técnica.  
+            Explora el catálogo, arma tu colección y gestiona todo desde una experiencia limpia y elegante.
+        </p>
+        <div class="hero-cta">
+            <a href="/obras/" class="btn-primary">Explorar catálogo</a>
+            <a href="/carrito/" class="btn-ghost">Ver mi carrito</a>
+        </div>
+    </div>
+    <div class="hero-right">
+        <div class="hero-art-orb"></div>
+    </div>
+</section>
+
+<main>
+    <section class="page-content">
+        {% block content %}{% endblock %}
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 — Cristian Erre · Arte Digital & Ilustración Profesional</p>
+</footer>
+
+</body>
+</html>
+
+
