@@ -5,7 +5,7 @@ __pycache__/
 # Django
 *.log
 staticfiles/
-media/
+#media/
 
 # Environment
 .env
