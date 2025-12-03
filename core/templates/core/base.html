@@ -489,16 +489,50 @@
         /* -------------------------
            FOOTER
         --------------------------*/
-        footer {
-            text-align: center;
-            padding: 30px 20px 40px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+        .footer-dark {
+            background: #000;
+            color: #fff;
         }
 
-        footer p:hover {
-            color: var(--accent-gold-strong);
+        .footer-dark h4,
+        .footer-dark h5 {
+            color: #fff;
+        }
+
+        .footer-dark p,
+        .footer-dark a {
+            color: #cfcfcf;
+        }
+
+        .footer-icon {
+            display: inline-flex;
+            padding: 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
             transition: 0.3s ease;
+        }
+
+        .footer-icon:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px);
+        }
+
+
+        /* Cards de categorías */
+        .category-card img {
+            transition: transform .4s ease;
+        }
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .text-shadow {
+            text-shadow: 0px 3px 10px rgba(0,0,0,0.9);
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
         }
     </style>
 
@@ -568,8 +602,62 @@
     </section>
 </main>
 
-<footer>
-    <p>© 2025 — Cristian Erre · Arte Digital & Ilustración Profesional</p>
+<footer class="footer-dark mt-5 pt-5 pb-4">
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Marca -->
+            <div class="col-md-4 mb-4">
+                <h4 class="fw-bold mb-3">Cristian Erre</h4>
+                <p class="text-muted">
+                    Arte digital de alto nivel. Obras exclusivas con carácter, emoción y diseño vanguardista.
+                </p>
+            </div>
+
+            <!-- Contacto -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">Contacto</h5>
+                <p class="mb-1"><i class="bi bi-envelope"></i> contacto@cristianerre.com</p>
+                <p><i class="bi bi-phone"></i> +56 9 1234 5678</p>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">Sígueme</h5>
+
+                <div class="d-flex gap-3">
+                    <!-- IG -->
+                    <a href="https://www.instagram.com/cristian_erre/?hl=es" target="_blank" class="footer-icon">
+                        <svg width="28" height="28" fill="#ffffff" viewBox="0 0 16 16">
+                            <path d="M8 0C5.8 0 5.5 0 4.7.1c-.8.1-1.4.3-2 .6A4.1 4.1 0 0 0 .7 2.7c-.3.6-.5 1.2-.6 2C0 5.5 0 5.8 0 8s0 2.5.1 3.3c.1.8.3 1.4.6 2 .3.6.7 1 1.4 1.4.6.3 1.2.5 2 .6.8.1 1.1.1 3.3.1s2.5 0 3.3-.1c.8-.1 1.4-.3 2-.6a4.1 4.1 0 0 0 1.4-1.4c.3-.6.5-1.2.6-2 .1-.8.1-1.1.1-3.3s0-2.5-.1-3.3c-.1-.8-.3-1.4-.6-2C14.3.9 13.9.5 13.3.2c-.6-.3-1.2-.5-2-.6C10.5 0 10.2 0 8 0Zm0 3.9a4.1 4.1 0 1 1 0 8.2 4.1 4.1 0 0 1 0-8.2Zm5.2-.7a1 1 0 1 1-2.1 0 1 1 0 0 1 2.1 0Z"/>
+                        </svg>
+                    </a>
+
+                    <!-- TikTok -->
+                    <a href="https://web.facebook.com/errecristian/?ref=pro_upsell_xav_ig_profile_page_web#" target="_blank" class="footer-icon">
+                        <svg width="28" height="28" fill="#ffffff" viewBox="0 0 24 24">
+                            <path d="M12.5 2c1 3 3 5 6 5v4c-2 0-4-1-6-2v7a6 6 0 1 1-6-6h2a4 4 0 1 0 4 4V2z"/>
+                        </svg>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="https://youtube.com" target="_blank" class="footer-icon">
+                        <svg width="28" height="28" fill="#ffffff" viewBox="0 0 24 24">
+                            <path d="M19.6 3.2c1.1.2 2 .9 2.2 2 .5 2.1.5 6.6.5 6.6s0 4.5-.5 6.6c-.2 1.1-1.1 1.8-2.2 2-2.1.5-7.6.5-7.6.5s-5.5 0-7.6-.5c-1.1-.2-2-.9-2.2-2C1.2 16.3 1.2 12 1.2 12s0-4.5.5-6.6c.2-1.1 1.1-1.8 2.2-2C6 2.7 12 2.7 12 2.7s6 0 7.6.5zM10 8.7v6.6l5.8-3.3-5.8-3.3z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="mt-4 mb-3 border-secondary">
+
+        <div class="text-center text-muted">
+            © {{ now|date:"Y" }} Cristian Erre — Todos los derechos reservados.
+        </div>
+    </div>
 </footer>
 
 </body>
